@@ -191,7 +191,8 @@ document.querySelector('#app').innerHTML = `
       <div class="hero-inner">
         <p class="hero-eyebrow">DigitalMarketings.id</p>
         <h1 class="hero-headline">
-          Some brands you <span class="gradient-text">pass by.</span><br />Some become the ones you <span class="gradient-text">recognize.</span>
+          <span class="hero-line">Some brands you <span class="gradient-text">pass by.</span></span>
+          <span class="hero-line">Some become the ones you <span class="gradient-text">recognize.</span></span>
         </h1>
         <p class="hero-subtitle">
           We work closely with growing businesses, shaping ideas<br />into something people notice, and remember.
