@@ -326,7 +326,7 @@ document.querySelector('#app').innerHTML = `
     <section class="trusted-section" id="trusted">
       <div class="section-header">
         <p class="section-label" style="color: #06b6d4;">Trust & Experience</p>
-        <h2 class="section-title trusted-title">Consulted & <span class="gradient-text">Worked With</span></h2>
+        <h2 class="section-title">Consulted & <span class="gradient-text">Worked With</span></h2>
       </div>
       <div class="brand-marquee-wrapper">
         <div class="brand-marquee-row brand-marquee-left">

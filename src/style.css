@@ -349,7 +349,7 @@ a {
 
 .hero-headline {
   font-family: var(--font-headline);
-  font-size: clamp(36px, 4.2vw, 54px);
+  font-size: clamp(40px, 7vw, 84px);
   font-weight: 700;
   color: hsl(var(--foreground));
   letter-spacing: -0.03em;
@@ -495,7 +495,7 @@ a {
 
 .section-title {
   font-family: var(--font-headline);
-  font-size: clamp(48px, 12vw, 140px);
+  font-size: clamp(40px, 7vw, 84px);
   font-weight: 900;
   color: hsl(var(--foreground));
   letter-spacing: -0.04em;
@@ -937,10 +937,6 @@ a {
 
 .trusted-section .section-header {
   padding: 0 32px;
-}
-
-.trusted-title {
-  font-size: clamp(28px, 4vw, 48px) !important;
 }
 
 .brand-marquee-wrapper {
