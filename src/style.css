@@ -334,7 +334,8 @@ a {
 }
 
 .hero-inner {
-  max-width: 1060px;
+  max-width: 100%;
+  padding: 0 48px;
 }
 
 .hero-eyebrow {
@@ -359,6 +360,7 @@ a {
 
 .hero-line {
   display: block;
+  white-space: nowrap;
 }
 
 .hero-subtitle {
@@ -1161,8 +1163,16 @@ a {
     margin-bottom: 20px;
   }
 
+  .hero-inner {
+    padding: 0 16px;
+  }
+
   .hero-headline {
     font-size: clamp(26px, 7vw, 38px);
+  }
+
+  .hero-line {
+    white-space: normal;
   }
 
   .hero-subtitle {
