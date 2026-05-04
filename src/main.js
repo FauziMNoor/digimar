@@ -100,8 +100,9 @@ const brandLogos = [
   'senka', 'shopee', 'toyota', 'ugm', 'usm',
 ];
 
-function createBrandLogos() {
-  return brandLogos
+function createBrandLogoItems(logos) {
+  const doubled = [...logos, ...logos];
+  return doubled
     .map(
       (name) => `
     <div class="brand-logo-item">
@@ -111,6 +112,9 @@ function createBrandLogos() {
     )
     .join('');
 }
+
+const brandRow1 = brandLogos.slice(0, 15);
+const brandRow2 = brandLogos.slice(15);
 
 // ===========================
 // Selected Work Data
@@ -322,10 +326,15 @@ document.querySelector('#app').innerHTML = `
     <section class="trusted-section" id="trusted">
       <div class="section-header">
         <p class="section-label" style="color: #06b6d4;">Trust & Experience</p>
-        <h2 class="section-title">Previously Consulted & <span class="gradient-text">Worked With</span></h2>
+        <h2 class="section-title trusted-title">Consulted & <span class="gradient-text">Worked With</span></h2>
       </div>
-      <div class="brand-logo-grid">
-        ${createBrandLogos()}
+      <div class="brand-marquee-wrapper">
+        <div class="brand-marquee-row brand-marquee-left">
+          ${createBrandLogoItems(brandRow1)}
+        </div>
+        <div class="brand-marquee-row brand-marquee-right">
+          ${createBrandLogoItems(brandRow2)}
+        </div>
       </div>
     </section>
 
