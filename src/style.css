@@ -997,7 +997,13 @@ a {
   .projects-section {
     padding: 60px 16px;
   }
+  .project-card-wrapper {
+    height: auto;
+    margin-bottom: 24px;
+  }
   .project-card {
+    position: relative;
+    top: 0 !important;
     padding: 16px;
     border-radius: 20px;
   }
@@ -1023,7 +1029,7 @@ a {
   }
   .project-img-top,
   .project-img-bot {
-    height: 150px;
+    height: 120px;
     flex: 1;
     min-width: 0;
   }
