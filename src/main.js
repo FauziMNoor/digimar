@@ -1,5 +1,6 @@
 import './style.css';
 const logoUrl = '/logo/Digimar - Wide no Background.png';
+const logoIcon = '/logo/logo.png';
 
 // ===========================
 // Chevron SVG helper
@@ -157,6 +158,13 @@ document.querySelector('#app').innerHTML = `
       src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260328_065045_c44942da-53c6-4804-b734-f9e07fc22e08.mp4"
     ></video>
     <div class="fixed-bg-overlay"></div>
+    <div class="floating-logos">
+      <img src="${logoIcon}" class="float-logo fl-1" alt="" />
+      <img src="${logoIcon}" class="float-logo fl-2" alt="" />
+      <img src="${logoIcon}" class="float-logo fl-3" alt="" />
+      <img src="${logoIcon}" class="float-logo fl-4" alt="" />
+      <img src="${logoIcon}" class="float-logo fl-5" alt="" />
+    </div>
   </div>
 
   <!-- Scrollable Content Layer -->
