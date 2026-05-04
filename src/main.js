@@ -90,6 +90,29 @@ function createGalleryTiles(images) {
 }
 
 // ===========================
+// Consulted Brand Logos
+// ===========================
+const brandLogos = [
+  'armour', 'azarine', 'blibli', 'bocahindo', 'canon', 'elemis',
+  'ellips', 'fujifilm', 'glints', 'grab', 'hokben', 'idemitsu',
+  'itb', 'lotte', 'lps', 'mondemart', 'nars', 'nissin',
+  'pegadaian', 'polytron', 'raksa', 'ricola', 'rohto', 'sekai',
+  'senka', 'shopee', 'toyota', 'ugm', 'usm',
+];
+
+function createBrandLogos() {
+  return brandLogos
+    .map(
+      (name) => `
+    <div class="brand-logo-item">
+      <img src="/logobrand_consult/${name}.png" alt="${name}" loading="lazy" />
+    </div>
+  `
+    )
+    .join('');
+}
+
+// ===========================
 // Selected Work Data
 // ===========================
 const selectedWork = [
@@ -292,6 +315,17 @@ document.querySelector('#app').innerHTML = `
       </div>
       <div class="sw-grid">
         ${createSelectedWorkCards()}
+      </div>
+    </section>
+
+    <!-- Trusted By Section -->
+    <section class="trusted-section" id="trusted">
+      <div class="section-header">
+        <p class="section-label" style="color: #06b6d4;">Trust & Experience</p>
+        <h2 class="section-title">Previously Consulted & <span class="gradient-text">Worked With</span></h2>
+      </div>
+      <div class="brand-logo-grid">
+        ${createBrandLogos()}
       </div>
     </section>
 

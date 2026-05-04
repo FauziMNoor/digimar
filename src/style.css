@@ -928,6 +928,54 @@ a {
 }
 
 /* ===========================
+   Trusted By / Brand Logos
+   =========================== */
+.trusted-section {
+  padding: 100px 32px 60px;
+}
+
+.brand-logo-grid {
+  max-width: 1120px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 12px;
+}
+
+.brand-logo-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 20px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.02);
+  transition: all 0.4s ease;
+}
+
+.brand-logo-item img {
+  max-width: 100%;
+  max-height: 48px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  filter: grayscale(1) brightness(0.7) invert(0.85);
+  opacity: 0.5;
+  transition: all 0.4s ease;
+}
+
+.brand-logo-item:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.brand-logo-item:hover img {
+  filter: grayscale(0) brightness(1) invert(0);
+  opacity: 1;
+}
+
+/* ===========================
    Footer / Contact Section
    =========================== */
 .footer-section {
@@ -1189,6 +1237,25 @@ a {
 
   .sw-name {
     font-size: 20px;
+  }
+
+  /* Trusted By responsive */
+  .trusted-section {
+    padding: 50px 16px;
+  }
+
+  .brand-logo-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+
+  .brand-logo-item {
+    padding: 16px 12px;
+    border-radius: 12px;
+  }
+
+  .brand-logo-item img {
+    max-height: 32px;
   }
 
   /* Footer responsive */
