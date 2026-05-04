@@ -254,7 +254,7 @@ a {
 }
 
 .navbar-logo img {
-  height: 40px;
+  height: 52px;
   width: auto;
   filter: brightness(0) invert(1);
 }
@@ -1041,17 +1041,70 @@ a {
     padding: 12px 20px;
   }
 
+  .navbar-logo img {
+    height: 40px;
+  }
+
   .navbar-center {
     display: none;
   }
 
+  .btn-hero-secondary {
+    padding: 8px 20px;
+    font-size: 12px;
+  }
+
+  .hero-section {
+    padding: 100px 20px 60px;
+    min-height: 90vh;
+  }
+
+  .hero-eyebrow {
+    font-size: 11px;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+  }
+
   .hero-headline {
-    font-size: clamp(28px, 7vw, 42px);
+    font-size: clamp(26px, 7vw, 38px);
+  }
+
+  .hero-subtitle {
+    font-size: 15px;
+  }
+
+  .hero-subtitle br {
+    display: none;
+  }
+
+  .btn-cta-gradient {
+    padding: 14px 36px;
+    font-size: 13px;
+  }
+
+  .marquee-section {
+    padding: 40px 16px;
+  }
+
+  .marquee-label {
+    font-size: 12px;
   }
 
   .glass-container {
-    padding: 40px 24px;
-    border-radius: 24px;
+    padding: 32px 20px;
+    border-radius: 20px;
+  }
+
+  .section-header {
+    margin-bottom: 32px;
+  }
+
+  .section-title {
+    font-size: clamp(28px, 8vw, 40px);
+  }
+
+  .section-label {
+    font-size: 11px;
   }
 
   .content-section {
@@ -1059,7 +1112,11 @@ a {
   }
 
   .about-section {
-    padding: 60px 16px;
+    padding: 50px 16px;
+  }
+
+  .float-logo {
+    display: none;
   }
 
   .about-vm-item {
@@ -1110,25 +1167,41 @@ a {
 
   /* Selected Work responsive */
   .selected-work-section {
-    padding: 60px 16px;
+    padding: 50px 16px;
   }
 
   .sw-grid {
     grid-template-columns: 1fr;
+    gap: 20px;
   }
 
   .sw-card {
-    padding: 32px 24px;
+    padding: 28px 20px;
+  }
+
+  .sw-number {
+    font-size: clamp(32px, 8vw, 48px);
+  }
+
+  .sw-name {
+    font-size: 20px;
   }
 
   /* Footer responsive */
   .footer-section {
-    padding: 60px 16px 32px;
+    padding: 50px 16px 32px;
   }
 
   .footer-content {
-    grid-template-columns: 1fr;
-    gap: 40px;
+    gap: 32px;
+  }
+
+  .footer-tagline {
+    font-size: 18px;
+  }
+
+  .footer-icon-link {
+    font-size: 14px;
   }
 }
 
