@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "num": "01",
+    "name": "Cik Swi",
+    "location": "Denpasar",
+    "context": "A long-standing food business looking to take on a more modern presence while staying true to its roots.",
+    "workedOn": "Refining brand storytelling and visual direction. We develop content that reflects its core identity, while expanding into digital through posts, website support, and its own online ordering platform.",
+    "direction": "To make the brand more recognizable and memorable — something people not only notice, but associate with familiarity.",
+    "link": ""
+  },
+  {
+    "id": 2,
+    "num": "02",
+    "name": "Alexandra Beauty",
+    "location": "Jimbaran",
+    "context": "A newly growing beauty business, evolving from a makeup artist into a broader beauty and spa offering.",
+    "workedOn": "Building the foundation from the ground up — from branding direction, content setup, early audience targeting, and initial advertising, along with the tools needed to support growth.",
+    "direction": "To create a clear and structured starting point for long-term visibility and development.",
+    "link": ""
+  }
+]

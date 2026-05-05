@@ -90,53 +90,27 @@ function createGalleryTiles(images) {
 }
 
 // ===========================
-// Consulted Brand Logos
+// Consulted Brand Logos (fetched from API)
 // ===========================
-const brandLogos = [
-  'armour', 'azarine', 'blibli', 'bocahindo', 'canon', 'elemis',
-  'ellips', 'fujifilm', 'glints', 'grab', 'hokben', 'idemitsu',
-  'itb', 'lotte', 'lps', 'mondemart', 'nars', 'nissin',
-  'pegadaian', 'polytron', 'raksa', 'ricola', 'rohto', 'sekai',
-  'senka', 'shopee', 'toyota', 'ugm', 'usm',
-];
+let brandLogos = [];
 
 function createBrandLogoItems(logos) {
   const doubled = [...logos, ...logos];
   return doubled
     .map(
-      (name) => `
+      (b) => `
     <div class="brand-logo-item">
-      <img src="/logobrand_consult/${name}.png" alt="${name}" loading="lazy" />
+      <img src="/logobrand_consult/${b.file}" alt="${b.name}" loading="lazy" />
     </div>
   `
     )
     .join('');
 }
 
-const brandRow1 = brandLogos.slice(0, 15);
-const brandRow2 = brandLogos.slice(15);
-
 // ===========================
-// Selected Work Data
+// Selected Work Data (fetched from API)
 // ===========================
-const selectedWork = [
-  {
-    num: '01',
-    name: 'Cik Swi',
-    location: 'Denpasar',
-    context: 'A long-standing food business looking to take on a more modern presence while staying true to its roots.',
-    workedOn: 'Refining brand storytelling and visual direction. We develop content that reflects its core identity, while expanding into digital through posts, website support, and its own online ordering platform.',
-    direction: 'To make the brand more recognizable and memorable — something people not only notice, but associate with familiarity.',
-  },
-  {
-    num: '02',
-    name: 'Alexandra Beauty',
-    location: 'Jimbaran',
-    context: 'A newly growing beauty business, evolving from a makeup artist into a broader beauty and spa offering.',
-    workedOn: 'Building the foundation from the ground up — from branding direction, content setup, early audience targeting, and initial advertising, along with the tools needed to support growth.',
-    direction: 'To create a clear and structured starting point for long-term visibility and development.',
-  },
-];
+let selectedWork = [];
 
 function createSelectedWorkCards() {
   return selectedWork
@@ -171,9 +145,32 @@ function createSelectedWorkCards() {
 }
 
 // ===========================
-// Render App
+// Fetch data & Render App
 // ===========================
-document.querySelector('#app').innerHTML = `
+async function initApp() {
+  try {
+    const [brandsRes, worksRes] = await Promise.all([
+      fetch('/api/brands').then(r => r.ok ? r.json() : []),
+      fetch('/api/works').then(r => r.ok ? r.json() : []),
+    ]);
+    brandLogos = brandsRes;
+    selectedWork = worksRes;
+  } catch {
+    // Fallback: try loading from static JSON in public folder
+    try {
+      const [brandsRes, worksRes] = await Promise.all([
+        fetch('/data/brands.json').then(r => r.ok ? r.json() : []),
+        fetch('/data/works.json').then(r => r.ok ? r.json() : []),
+      ]);
+      brandLogos = brandsRes;
+      selectedWork = worksRes;
+    } catch { /* use empty arrays */ }
+  }
+
+  const brandRow1 = brandLogos.slice(0, Math.ceil(brandLogos.length / 2));
+  const brandRow2 = brandLogos.slice(Math.ceil(brandLogos.length / 2));
+
+  document.querySelector('#app').innerHTML = `
   <!-- Fixed Full-Screen Video Background -->
   <div class="fixed-bg" id="fixedBg">
     <video
@@ -376,128 +373,137 @@ document.querySelector('#app').innerHTML = `
   </div>
 `;
 
-// ===========================
-// Video Fade Loop Controller
-// ===========================
-(function initVideoLoop() {
-  const video = document.getElementById('heroVideo');
-  if (!video) return;
+  initInteractions();
+}
 
-  const FADE_DURATION = 0.5;
-  let isFadingIn = false;
-  let isFadingOut = false;
-  let fadeStart = 0;
+function initInteractions() {
+  // ===========================
+  // Video Fade Loop Controller
+  // ===========================
+  (function initVideoLoop() {
+    const video = document.getElementById('heroVideo');
+    if (!video) return;
 
-  function startFadeIn() {
-    isFadingIn = true;
-    fadeStart = 0;
-    requestAnimationFrame(fadeInTick);
-  }
+    const FADE_DURATION = 0.5;
+    let isFadingIn = false;
+    let isFadingOut = false;
+    let fadeStart = 0;
 
-  function fadeInTick(ts) {
-    if (!fadeStart) fadeStart = ts;
-    const elapsed = (ts - fadeStart) / 1000;
-    const progress = Math.min(elapsed / FADE_DURATION, 1);
-    video.style.opacity = progress;
-    if (progress < 1) requestAnimationFrame(fadeInTick);
-    else isFadingIn = false;
-  }
-
-  function fadeOutTick(ts) {
-    if (!fadeStart) fadeStart = ts;
-    const elapsed = (ts - fadeStart) / 1000;
-    const progress = Math.min(elapsed / FADE_DURATION, 1);
-    video.style.opacity = 1 - progress;
-    if (progress < 1) requestAnimationFrame(fadeOutTick);
-    else isFadingOut = false;
-  }
-
-  function checkForFadeOut() {
-    if (!isFadingOut && !isFadingIn && video.duration && video.currentTime >= video.duration - FADE_DURATION) {
-      isFadingOut = true;
+    function startFadeIn() {
+      isFadingIn = true;
       fadeStart = 0;
-      requestAnimationFrame(fadeOutTick);
+      requestAnimationFrame(fadeInTick);
     }
-  }
 
-  video.addEventListener('ended', () => {
-    video.style.opacity = 0;
-    setTimeout(() => { video.currentTime = 0; video.play(); startFadeIn(); }, 100);
-  });
-  video.addEventListener('timeupdate', checkForFadeOut);
-  video.play().then(() => startFadeIn()).catch(() => { video.muted = true; video.play().then(() => startFadeIn()); });
-})();
-
-// ===========================
-// Parallax Zoom on Background
-// ===========================
-(function initParallaxZoom() {
-  const bg = document.getElementById('fixedBg');
-  if (!bg) return;
-  let ticking = false;
-  window.addEventListener('scroll', () => {
-    if (!ticking) {
-      requestAnimationFrame(() => {
-        const scrollY = window.scrollY;
-        const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-        const progress = Math.min(scrollY / maxScroll, 1);
-        const scale = 1 + progress * 0.35;
-        bg.style.transform = `scale(${scale})`;
-        ticking = false;
-      });
-      ticking = true;
+    function fadeInTick(ts) {
+      if (!fadeStart) fadeStart = ts;
+      const elapsed = (ts - fadeStart) / 1000;
+      const progress = Math.min(elapsed / FADE_DURATION, 1);
+      video.style.opacity = progress;
+      if (progress < 1) requestAnimationFrame(fadeInTick);
+      else isFadingIn = false;
     }
-  });
-})();
 
-// ===========================
-// Scroll Reveal for All Elements
-// ===========================
-(function initScrollReveal() {
-  const revealEls = document.querySelectorAll('.glass-container, .service-item, .about-story-center, .about-vm-item, .sw-card, .footer-cta, .footer-info-block');
-  if (!revealEls.length) return;
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.1 }
-  );
-  revealEls.forEach((el) => observer.observe(el));
-})();
-
-// ===========================
-// Gallery Scroll-Driven Movement
-// ===========================
-(function initGalleryScroll() {
-  const section = document.getElementById('gallery');
-  const row1 = document.getElementById('galleryRow1');
-  const row2 = document.getElementById('galleryRow2');
-  if (!section || !row1 || !row2) return;
-
-  let ticking = false;
-
-  function onScroll() {
-    if (!ticking) {
-      requestAnimationFrame(() => {
-        const rect = section.getBoundingClientRect();
-        const sectionTop = section.offsetTop;
-        const offset = (window.scrollY - sectionTop + window.innerHeight) * 0.3;
-
-        row1.style.transform = `translateX(${offset - 200}px)`;
-        row2.style.transform = `translateX(${-(offset - 200)}px)`;
-
-        ticking = false;
-      });
-      ticking = true;
+    function fadeOutTick(ts) {
+      if (!fadeStart) fadeStart = ts;
+      const elapsed = (ts - fadeStart) / 1000;
+      const progress = Math.min(elapsed / FADE_DURATION, 1);
+      video.style.opacity = 1 - progress;
+      if (progress < 1) requestAnimationFrame(fadeOutTick);
+      else isFadingOut = false;
     }
-  }
 
-  window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll(); // Initial position
-})();
+    function checkForFadeOut() {
+      if (!isFadingOut && !isFadingIn && video.duration && video.currentTime >= video.duration - FADE_DURATION) {
+        isFadingOut = true;
+        fadeStart = 0;
+        requestAnimationFrame(fadeOutTick);
+      }
+    }
 
+    video.addEventListener('ended', () => {
+      video.style.opacity = 0;
+      setTimeout(() => { video.currentTime = 0; video.play(); startFadeIn(); }, 100);
+    });
+    video.addEventListener('timeupdate', checkForFadeOut);
+    video.play().then(() => startFadeIn()).catch(() => { video.muted = true; video.play().then(() => startFadeIn()); });
+  })();
+
+  // ===========================
+  // Parallax Zoom on Background
+  // ===========================
+  (function initParallaxZoom() {
+    const bg = document.getElementById('fixedBg');
+    if (!bg) return;
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const scrollY = window.scrollY;
+          const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+          const progress = Math.min(scrollY / maxScroll, 1);
+          const scale = 1 + progress * 0.35;
+          bg.style.transform = `scale(${scale})`;
+          ticking = false;
+        });
+        ticking = true;
+      }
+    });
+  })();
+
+  // ===========================
+  // Scroll Reveal for All Elements
+  // ===========================
+  (function initScrollReveal() {
+    const revealEls = document.querySelectorAll('.glass-container, .service-item, .about-story-center, .about-vm-item, .sw-card, .footer-cta, .footer-info-block');
+    if (!revealEls.length) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+    revealEls.forEach((el) => observer.observe(el));
+  })();
+
+  // ===========================
+  // Gallery Scroll-Driven Movement
+  // ===========================
+  (function initGalleryScroll() {
+    const section = document.getElementById('gallery');
+    const row1 = document.getElementById('galleryRow1');
+    const row2 = document.getElementById('galleryRow2');
+    if (!section || !row1 || !row2) return;
+
+    let ticking = false;
+
+    function onScroll() {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const rect = section.getBoundingClientRect();
+          const sectionTop = section.offsetTop;
+          const offset = (window.scrollY - sectionTop + window.innerHeight) * 0.3;
+
+          row1.style.transform = `translateX(${offset - 200}px)`;
+          row2.style.transform = `translateX(${-(offset - 200)}px)`;
+
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll(); // Initial position
+  })();
+}
+
+// ===========================
+// Boot
+// ===========================
+initApp();
