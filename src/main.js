@@ -1,5 +1,5 @@
 import './style.css';
-const logoUrl = '/logo/Digimar - Wide no Background.png';
+const logoUrl = '/logo/Skypark - Wide no Background.png';
 const logoIcon = '/logo/logo.png';
 
 // ===========================
@@ -197,7 +197,7 @@ async function initApp() {
     <!-- Navbar -->
     <nav class="navbar" id="navbar">
       <a href="/" class="navbar-logo">
-        <img src="${logoUrl}" alt="Digitalmarketings.id logo" />
+        <img src="${logoUrl}" alt="Skypark logo" />
       </a>
       <div class="navbar-center">
         <a href="#about" class="nav-item">About</a>
@@ -213,7 +213,7 @@ async function initApp() {
     <!-- Hero Section -->
     <section class="hero-section" id="hero-section">
       <div class="hero-inner">
-        <p class="hero-eyebrow">DigitalMarketings.id</p>
+        <p class="hero-eyebrow">Skypark</p>
         <h1 class="hero-headline">
           <span class="hero-line">Some brands you <span class="gradient-text">pass by</span></span>
           <span class="hero-line">Some become the ones you <span class="gradient-text">recognize</span></span>
@@ -250,7 +250,7 @@ async function initApp() {
           <div class="about-story-block">
             <div class="about-accent-bar"></div>
             <div class="about-story-center">
-              <p class="about-lead"><strong>DigitalMarketings.id</strong> is a Bali-based digital partner for businesses that want to grow, evolve, or redefine how they show up.</p>
+              <p class="about-lead"><strong>Skypark</strong> is a Bali-based digital partner for businesses that want to grow, evolve, or redefine how they show up.</p>
               <p class="about-body">We work closely with early-stage and growing businesses, helping them shape ideas in their early thoughts into something more structured, more intentional, and built to last.</p>
               <p class="about-body">Not everything starts clear. Sometimes it's just a thought, a direction, or something that hasn't fully come together yet. That's where we come in.</p>
               <p class="about-body">We help make sense of it — highlighting your path for success, turning ideas into direction, and showcase your work into something people remember.</p>
@@ -365,7 +365,7 @@ async function initApp() {
           </div>
         </div>
         <div class="footer-bottom">
-          <p class="footer-copy">&copy; ${new Date().getFullYear()} Digimar. All rights reserved.</p>
+          <p class="footer-copy">&copy; ${new Date().getFullYear()} Skypark. All rights reserved.</p>
         </div>
       </div>
     </footer>

@@ -42,7 +42,7 @@ function renderLogin() {
   return `
     <div class="admin-login-wrap">
       <div class="admin-login-card">
-        <img src="/logo/logo.png" class="admin-login-logo" alt="Digimar" />
+        <img src="/logo/logo.png" class="admin-login-logo" alt="Skypark" />
         <h1 class="admin-login-title">Admin Panel</h1>
         <p class="admin-login-sub">Login to manage your website</p>
         <form id="loginForm" class="admin-login-form">
@@ -87,8 +87,8 @@ function renderDashboard() {
     <div class="admin-layout">
       <aside class="admin-sidebar">
         <div class="admin-sidebar-logo">
-          <img src="/logo/logo.png" alt="Digimar" />
-          <span>Digimar</span>
+          <img src="/logo/logo.png" alt="Skypark" />
+          <span>Skypark</span>
         </div>
         <nav class="admin-nav">
           <button class="admin-nav-item ${activeTab === 'brands' ? 'active' : ''}" data-tab="brands">

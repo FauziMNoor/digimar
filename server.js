@@ -12,11 +12,11 @@ const __dirname = dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const JWT_SECRET = process.env.JWT_SECRET || 'digimar-admin-secret-2025';
+const JWT_SECRET = process.env.JWT_SECRET || 'skypark-admin-secret-2025';
 
 // Default admin credentials (change via env vars in production)
 const ADMIN_USER = process.env.ADMIN_USER || 'admin';
-const ADMIN_PASS_HASH = bcryptjs.hashSync(process.env.ADMIN_PASS || 'digimar2025', 10);
+const ADMIN_PASS_HASH = bcryptjs.hashSync(process.env.ADMIN_PASS || 'skypark2025', 10);
 
 // Middleware
 app.use(express.json());
@@ -192,5 +192,5 @@ app.get('/{*splat}', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Digimar server running on http://localhost:${PORT}`);
+  console.log(`Skypark server running on http://localhost:${PORT}`);
 });

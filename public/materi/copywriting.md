@@ -1,4 +1,4 @@
-# Copywriting — DigitalMarketings.id
+# Copywriting — Skypark
 
 ---
 
@@ -17,7 +17,7 @@ We work closely with growing businesses, shaping ideas into something people not
 
 ## ABOUT US
 
-**DigitalMarketings.id** is a Bali-based digital partner for businesses that want to grow, evolve, or redefine how they show up.
+**Skypark** is a Bali-based digital partner for businesses that want to grow, evolve, or redefine how they show up.
 
 We work closely with early-stage and growing businesses, helping them shape ideas in their early thoughts into something more structured, more intentional, and built to last.
 
