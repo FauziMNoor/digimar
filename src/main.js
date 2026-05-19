@@ -219,7 +219,7 @@ async function initApp() {
           <span class="hero-line">Some become the ones you <span class="gradient-text">recognize</span></span>
         </h1>
         <p class="hero-subtitle">
-          We work closely with growing businesses, shaping ideas<br />into something people notice, and remember.
+          We work closely with growing businesses, shaping ideas <br />into something people notice, and remember.
         </p>
         <a href="https://wa.me/6285926461587" target="_blank" class="btn-cta-gradient" id="btn-cta">Let's Build It Together</a>
       </div>
