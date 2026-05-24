@@ -1,8 +1,10 @@
+import 'dotenv/config';
 import express from 'express';
 import multer from 'multer';
 import bcryptjs from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import cookieParser from 'cookie-parser';
+import nodemailer from 'nodemailer';
 import { readFileSync, writeFileSync, existsSync, unlinkSync, mkdirSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
@@ -21,6 +23,27 @@ const ADMIN_PASS_HASH = bcryptjs.hashSync(process.env.ADMIN_PASS || 'skypark2025
 // Middleware
 app.use(express.json());
 app.use(cookieParser());
+
+// --- SMTP Transporter ---
+const smtpTransporter = nodemailer.createTransport({
+  host: process.env.SMTP_HOST || 'smtp.sumopod.com',
+  port: parseInt(process.env.SMTP_PORT || '465'),
+  secure: (process.env.SMTP_SECURE || 'true') === 'true',
+  auth: {
+    user: process.env.SMTP_USER || '',
+    pass: process.env.SMTP_PASS || '',
+  },
+  tls: {
+    rejectUnauthorized: false,
+  },
+});
+
+// Verify SMTP connection on startup
+smtpTransporter.verify().then(() => {
+  console.log('✓ SMTP connection verified');
+}).catch((err) => {
+  console.warn('⚠ SMTP connection failed:', err.message);
+});
 
 // --- Data helpers ---
 const DATA_DIR = join(__dirname, 'data');
@@ -173,6 +196,52 @@ app.delete('/api/works/:id', authMiddleware, (req, res) => {
   works.forEach((w, i) => { w.num = String(i + 1).padStart(2, '0'); });
   writeJSON(WORKS_FILE, works);
   res.json({ success: true });
+});
+
+// ===========================
+// Contact Form - Email
+// ===========================
+app.post('/api/contact', async (req, res) => {
+  const { name, email, phone, message } = req.body;
+
+  // Validation
+  if (!name || !email || !message) {
+    return res.status(400).json({ error: 'Name, email, and message are required' });
+  }
+
+  // Simple email format check
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    return res.status(400).json({ error: 'Invalid email format' });
+  }
+
+  try {
+    const mailOptions = {
+      from: `"Skypark Website" <${process.env.SMTP_FROM_EMAIL || process.env.SMTP_USER}>`,
+      to: process.env.SMTP_TO_EMAIL || 'hello@skypark.id',
+      replyTo: email,
+      subject: `New Inquiry from ${name}`,
+      html: `
+        <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2 style="color: #f97316;">New Contact Form Submission</h2>
+          <hr style="border: 1px solid #eee;" />
+          <p><strong>Name:</strong> ${name}</p>
+          <p><strong>Email:</strong> ${email}</p>
+          ${phone ? `<p><strong>Phone:</strong> ${phone}</p>` : ''}
+          <p><strong>Message:</strong></p>
+          <p style="background: #f9f9f9; padding: 16px; border-radius: 8px;">${message.replace(/\n/g, '<br>')}</p>
+          <hr style="border: 1px solid #eee;" />
+          <p style="color: #888; font-size: 12px;">Sent from Skypark website contact form</p>
+        </div>
+      `,
+    };
+
+    await smtpTransporter.sendMail(mailOptions);
+    res.json({ success: true, message: 'Email sent successfully' });
+  } catch (err) {
+    console.error('Email send error:', err.message);
+    res.status(500).json({ error: 'Failed to send email. Please try again later.' });
+  }
 });
 
 // ===========================
