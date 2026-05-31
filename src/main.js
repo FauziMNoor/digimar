@@ -176,19 +176,14 @@ async function initApp() {
     <video
       class="fixed-bg-video"
       id="heroVideo"
+      autoplay
       muted
+      loop
       playsinline
-      preload="auto"
-      src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260328_065045_c44942da-53c6-4804-b734-f9e07fc22e08.mp4"
     ></video>
     <div class="fixed-bg-overlay"></div>
-    <div class="floating-logos">
-      <img src="${logoIcon}" class="float-logo fl-1" alt="" />
-      <img src="${logoIcon}" class="float-logo fl-2" alt="" />
-      <img src="${logoIcon}" class="float-logo fl-3" alt="" />
-      <img src="${logoIcon}" class="float-logo fl-4" alt="" />
-      <img src="${logoIcon}" class="float-logo fl-5" alt="" />
-    </div>
+    <canvas id="particles" class="particles-canvas"></canvas>
+    <div class="fixed-bg-fade"></div>
   </div>
 
   <!-- Scrollable Content Layer -->
@@ -400,55 +395,29 @@ async function initApp() {
 
 function initInteractions() {
   // ===========================
-  // Video Fade Loop Controller
+  // HLS.js Video Player Initialization
   // ===========================
-  (function initVideoLoop() {
+  (function initHlsVideo() {
     const video = document.getElementById('heroVideo');
     if (!video) return;
-
-    const FADE_DURATION = 0.5;
-    let isFadingIn = false;
-    let isFadingOut = false;
-    let fadeStart = 0;
-
-    function startFadeIn() {
-      isFadingIn = true;
-      fadeStart = 0;
-      requestAnimationFrame(fadeInTick);
+    
+    video.style.opacity = 1;
+    
+    const videoSrc = 'https://stream.mux.com/3gErUdcrPfibrZ00ysHSLAupEL01PeX4PpAwgcGpGvbAM.m3u8';
+    
+    if (window.Hls && window.Hls.isSupported()) {
+      const hls = new window.Hls();
+      hls.loadSource(videoSrc);
+      hls.attachMedia(video);
+      hls.on(window.Hls.Events.MANIFEST_PARSED, function() {
+        video.play().catch(e => console.warn("Autoplay prevented", e));
+      });
+    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+      video.src = videoSrc;
+      video.addEventListener('loadedmetadata', function() {
+        video.play().catch(e => console.warn("Autoplay prevented", e));
+      });
     }
-
-    function fadeInTick(ts) {
-      if (!fadeStart) fadeStart = ts;
-      const elapsed = (ts - fadeStart) / 1000;
-      const progress = Math.min(elapsed / FADE_DURATION, 1);
-      video.style.opacity = progress;
-      if (progress < 1) requestAnimationFrame(fadeInTick);
-      else isFadingIn = false;
-    }
-
-    function fadeOutTick(ts) {
-      if (!fadeStart) fadeStart = ts;
-      const elapsed = (ts - fadeStart) / 1000;
-      const progress = Math.min(elapsed / FADE_DURATION, 1);
-      video.style.opacity = 1 - progress;
-      if (progress < 1) requestAnimationFrame(fadeOutTick);
-      else isFadingOut = false;
-    }
-
-    function checkForFadeOut() {
-      if (!isFadingOut && !isFadingIn && video.duration && video.currentTime >= video.duration - FADE_DURATION) {
-        isFadingOut = true;
-        fadeStart = 0;
-        requestAnimationFrame(fadeOutTick);
-      }
-    }
-
-    video.addEventListener('ended', () => {
-      video.style.opacity = 0;
-      setTimeout(() => { video.currentTime = 0; video.play(); startFadeIn(); }, 100);
-    });
-    video.addEventListener('timeupdate', checkForFadeOut);
-    video.play().then(() => startFadeIn()).catch(() => { video.muted = true; video.play().then(() => startFadeIn()); });
   })();
 
   // ===========================
@@ -575,6 +544,61 @@ function initInteractions() {
         submitBtn.textContent = 'Send Message';
       }
     });
+  })();
+
+  // ===========================
+  // Particles Canvas
+  // ===========================
+  (function initParticles(){
+    const canvas = document.getElementById('particles');
+    if(!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    
+    function resize(){ 
+      canvas.width = window.innerWidth; 
+      canvas.height = window.innerHeight; 
+    }
+    
+    function create(){
+      particles = [];
+      const numParticles = window.innerWidth < 768 ? 30 : 60;
+      for(let i=0; i<numParticles; i++){
+        particles.push({
+          x: Math.random() * canvas.width, 
+          y: Math.random() * canvas.height,
+          size: Math.random() * 2 + 1, 
+          opacity: Math.random() * 0.5 + 0.2,
+          speedY: Math.random() * 0.3 + 0.1, 
+          speedX: (Math.random() - 0.5) * 0.2
+        });
+      }
+    }
+    
+    function animate(){
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => {
+        p.y -= p.speedY; 
+        p.x += p.speedX;
+        if(p.y < -10) { 
+          p.y = canvas.height + 10; 
+          p.x = Math.random() * canvas.width; 
+        }
+        if(p.x < -10) p.x = canvas.width + 10;
+        if(p.x > canvas.width + 10) p.x = -10;
+        
+        ctx.beginPath(); 
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255,255,255,${p.opacity})`; 
+        ctx.fill();
+      });
+      requestAnimationFrame(animate);
+    }
+    
+    window.addEventListener('resize', () => { resize(); create(); });
+    resize(); 
+    create(); 
+    animate();
   })();
 }
 
