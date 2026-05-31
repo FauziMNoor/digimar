@@ -331,7 +331,7 @@ async function initApp() {
     </section>
 
     <!-- Footer / Contact -->
-    <footer class="footer-section" id="contact">
+    <section class="footer-section" id="contact">
       <div class="footer-inner">
         <div class="section-header">
           <p class="section-label" style="color: #f97316;">Let's Talk</p>
@@ -339,13 +339,14 @@ async function initApp() {
         </div>
         <div class="footer-content">
           <div class="footer-cta">
-            <p class="footer-tagline">Got an idea or a look in mind?<br />Let's shape it.</p>
             <form class="contact-form" id="contactForm">
-              <div class="form-group">
-                <input type="text" name="name" placeholder="Your Name *" required class="form-input" />
-              </div>
-              <div class="form-group">
-                <input type="email" name="email" placeholder="Your Email *" required class="form-input" />
+              <div class="form-row">
+                <div class="form-group">
+                  <input type="text" name="name" placeholder="Your Name *" required class="form-input" />
+                </div>
+                <div class="form-group">
+                  <input type="email" name="email" placeholder="Your Email *" required class="form-input" />
+                </div>
               </div>
               <div class="form-group">
                 <input type="tel" name="phone" placeholder="Phone Number (optional)" class="form-input" />
@@ -381,9 +382,23 @@ async function initApp() {
             </div>
           </div>
         </div>
-        <div class="footer-bottom">
-          <p class="footer-copy">&copy; ${new Date().getFullYear()} Skypark. All rights reserved.</p>
-        </div>
+      </div>
+    </section>
+
+    <!-- Giant Footer -->
+    <footer class="giant-footer">
+      <div class="giant-footer-glow"></div>
+      <div class="giant-footer-links">
+        <p>&copy; ${new Date().getFullYear()} Skypark. All rights reserved.</p>
+        <span class="giant-footer-divider">|</span>
+        <a href="https://instagram.com" target="_blank">Instagram</a>
+        <span class="giant-footer-divider">|</span>
+        <a href="https://linkedin.com" target="_blank">LinkedIn</a>
+        <span class="giant-footer-divider">|</span>
+        <a href="mailto:hello@skypark.id">Email</a>
+      </div>
+      <div class="giant-footer-text-wrapper">
+        <h1 class="giant-footer-text">SKYPARK<span class="giant-footer-dot">.</span></h1>
       </div>
     </footer>
 

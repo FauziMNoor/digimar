@@ -212,14 +212,14 @@ a {
   right: 0;
   z-index: 99;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15) 20%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0.15) 80%, transparent);
+  background: linear-gradient(90deg, transparent, rgba(249, 115, 22, 0.3) 20%, rgba(0, 229, 255, 0.4) 50%, rgba(249, 115, 22, 0.3) 80%, transparent);
 }
 
 /* ===========================
    Gradient Text Utility
    =========================== */
 .gradient-text {
-  background: linear-gradient(135deg, #ffffff 0%, #c0c0c0 40%, #888888 100%);
+  background: linear-gradient(135deg, #f97316 0%, #00e5ff 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -292,8 +292,8 @@ a {
   cursor: pointer;
   background: linear-gradient(123deg, #0a0a0a 0%, #2a2a2a 100%);
   box-shadow:
-    0px 4px 4px rgba(0, 0, 0, 0.5),
-    inset 4px 4px 12px rgba(255, 255, 255, 0.05);
+    0px 4px 12px rgba(0, 229, 255, 0.25),
+    inset 2px 2px 8px rgba(249, 115, 22, 0.15);
   outline: 2px solid rgba(255, 255, 255, 0.6);
   outline-offset: -3px;
   transition: transform 0.2s ease, box-shadow 0.3s ease;
@@ -302,8 +302,8 @@ a {
 .btn-cta-gradient:hover {
   transform: translateY(-2px);
   box-shadow:
-    0px 8px 20px rgba(0, 0, 0, 0.7),
-    inset 4px 4px 12px rgba(255, 255, 255, 0.1);
+    0px 8px 24px rgba(0, 229, 255, 0.5),
+    inset 2px 2px 8px rgba(249, 115, 22, 0.3);
 }
 
 /* ===========================
@@ -488,7 +488,7 @@ a {
 }
 
 .service-item:hover .service-number {
-  background: linear-gradient(180deg, #ffffff 0%, #bbbbbb 100%);
+  background: linear-gradient(180deg, #f97316 0%, #00e5ff 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -540,7 +540,7 @@ a {
   width: 3px;
   flex-shrink: 0;
   border-radius: 3px;
-  background: linear-gradient(180deg, #ffffff 0%, #888888 50%, #444444 100%);
+  background: linear-gradient(180deg, #f97316 0%, #00e5ff 100%);
 }
 
 /* Centered story paragraphs */
@@ -609,7 +609,7 @@ a {
   font-weight: 900;
   line-height: 1;
   letter-spacing: -0.04em;
-  background: linear-gradient(135deg, #ffffff 0%, #aaaaaa 100%);
+  background: linear-gradient(135deg, #f97316 0%, #00e5ff 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -691,7 +691,7 @@ a {
 }
 
 .about-vm-item:hover .about-vm-number {
-  background: linear-gradient(180deg, #ffffff 0%, #aaaaaa 100%);
+  background: linear-gradient(180deg, #f97316 0%, #00e5ff 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -778,7 +778,7 @@ a {
   font-weight: 900;
   line-height: 1;
   letter-spacing: -0.04em;
-  background: linear-gradient(135deg, #ffffff 0%, #bbbbbb 100%);
+  background: linear-gradient(135deg, #f97316 0%, #00e5ff 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -1247,6 +1247,27 @@ a {
 }
 
 
+@media (min-width: 768px) {
+  .footer-content {
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    max-width: 1100px;
+    margin: 0 auto 80px auto;
+    text-align: left;
+    align-items: flex-start;
+    justify-items: stretch;
+  }
+
+  .footer-info {
+    align-items: flex-start;
+  }
+
+  .contact-form {
+    max-width: 100%;
+    margin: 0;
+  }
+}
+
 /* ===========================
    Contact Form
    =========================== */
@@ -1257,6 +1278,21 @@ a {
   max-width: 480px;
   margin: 0 auto;
   text-align: left;
+}
+
+.form-row {
+  display: flex;
+  gap: 16px;
+}
+
+.form-row .form-group {
+  flex: 1;
+}
+
+@media (max-width: 480px) {
+  .form-row {
+    flex-direction: column;
+  }
 }
 
 .form-group {
@@ -1327,3 +1363,98 @@ a {
     font-size: 14px;
   }
 }
+
+/* ===========================
+   Giant Footer
+   =========================== */
+.giant-footer {
+  position: relative;
+  width: 100%;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: 120px;
+  overflow: hidden;
+  background-color: transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 64px;
+}
+
+.giant-footer-glow {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 350px;
+  background: linear-gradient(to top, rgba(249, 115, 22, 0.4) 0%, rgba(0, 229, 255, 0.1) 50%, transparent 100%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.giant-footer-links {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 1280px;
+  padding: 0 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  color: #9ca3af;
+  font-size: 14px;
+  margin-bottom: 32px;
+}
+
+@media (min-width: 768px) {
+  .giant-footer-links {
+    flex-direction: row;
+  }
+}
+
+.giant-footer-links a {
+  color: #9ca3af;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.giant-footer-links a:hover {
+  color: #fff;
+}
+
+.giant-footer-divider {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .giant-footer-divider {
+    display: inline-block;
+  }
+}
+
+.giant-footer-text-wrapper {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  line-height: 0.75;
+}
+
+.giant-footer-text {
+  font-family: var(--font-headline);
+  font-size: 18vw;
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: -0.05em;
+  text-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  margin: 0;
+}
+
+.giant-footer-dot {
+  color: #f97316;
+}
+   
+ 
